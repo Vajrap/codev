@@ -1,0 +1,19 @@
+{
+  "name": "codev",
+  "version": "0.1.0",
+  "description": "CODEV Framework — AI-agent-friendly project knowledge scaffolding",
+  "main": "index.js",
+  "bin": {
+    "codev": "./index.js"
+  },
+  "keywords": [
+    "ai",
+    "agent",
+    "framework",
+    "knowledge-base",
+    "developer-tools",
+    "scaffolding"
+  ],
+  "author": "",
+  "license": "MIT"
+}
