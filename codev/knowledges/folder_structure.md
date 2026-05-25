@@ -15,7 +15,7 @@
 ├── index.js            - Main executable CLI entry point
 ├── package.json        - CLI configuration and exports
 └── templates/          - Scaffolding templates copied to target repos
-    ├── AGENT.md        - Signpost pointing new agents to codev/init.md
+    ├── AGENTS.md        - Signpost pointing new agents to codev/init.md
     └── codev/          - The core folder structure templates
         ├── index.md    - Knowledge index skeleton
         ├── init.md     - Agent onboarding instructions

@@ -38,7 +38,9 @@ function copyDir(src, dest) {
 
 function cmdInit(targetDir) {
   const resolvedTarget = path.resolve(targetDir);
-  const agentMdPath = path.join(resolvedTarget, "AGENT.md");
+  const agentsMdPath = path.join(resolvedTarget, "AGENTS.md");
+  const legacyAgentMdPath = path.join(resolvedTarget, "AGENT.md");
+  const claudeMdPath = path.join(resolvedTarget, "CLAUDE.md");
   const codevDirPath = path.join(resolvedTarget, "codev");
 
   // Pre-flight checks
@@ -47,12 +49,17 @@ function cmdInit(targetDir) {
     process.exit(1);
   }
 
-  if (fs.existsSync(agentMdPath) || fs.existsSync(codevDirPath)) {
+  if (
+    fs.existsSync(agentsMdPath) ||
+    fs.existsSync(legacyAgentMdPath) ||
+    fs.existsSync(claudeMdPath) ||
+    fs.existsSync(codevDirPath)
+  ) {
     console.error(
-      "\n⚠️  CODEV is already initialized in this directory (AGENT.md or codev/ exists)."
+      "\n⚠️  CODEV is already initialized in this directory (AGENTS.md, CLAUDE.md, AGENT.md, or codev/ exists)."
     );
     console.error(
-      "   To re-initialize, remove AGENT.md and the codev/ folder first.\n"
+      "   To re-initialize, remove AGENTS.md, CLAUDE.md, AGENT.md, and the codev/ folder first.\n"
     );
     process.exit(1);
   }
@@ -60,8 +67,11 @@ function cmdInit(targetDir) {
   // Copy templates
   console.log(`\n🚀 Initializing CODEV Framework in: ${resolvedTarget}\n`);
 
-  fs.copyFileSync(path.join(TEMPLATES_DIR, "AGENT.md"), agentMdPath);
-  console.log("   ✅ AGENT.md");
+  fs.copyFileSync(path.join(TEMPLATES_DIR, "AGENTS.md"), agentsMdPath);
+  console.log("   ✅ AGENTS.md");
+
+  fs.copyFileSync(path.join(TEMPLATES_DIR, "CLAUDE.md"), claudeMdPath);
+  console.log("   ✅ CLAUDE.md           — Claude Code bridge to AGENTS.md");
 
   copyDir(path.join(TEMPLATES_DIR, "codev"), codevDirPath);
   console.log("   ✅ codev/init.md          — Agent onboarding workflow");
@@ -82,7 +92,7 @@ Next steps:
   1. Open your AI agent (Claude, Gemini, GPT, etc.)
   2. Tell it:
 
-     "Read AGENT.md and initialize the project knowledge base."
+     "Read AGENTS.md and initialize the project knowledge base."
 
   3. The agent will follow codev/init.md to scan the repo
      and populate the knowledge files automatically.
@@ -115,10 +125,10 @@ function cmdHelp() {
 
   WORKFLOW
     1.  Run "codev init" in your project root
-    2.  Tell your AI agent: "Read AGENT.md and initialize the project"
+    2.  Tell your AI agent: "Read AGENTS.md and initialize the project"
     3.  The agent scans the repo, writes atomic knowledge docs,
-        and turns AGENT.md into a project dashboard
-    4.  From then on, any new agent reads AGENT.md first,
+        and turns AGENTS.md into a project dashboard
+    4.  From then on, any new agent reads AGENTS.md first,
         follows the index, and picks up right where the last one left off
 `);
 }

@@ -1,12 +1,18 @@
 {
   "name": "codev-framework",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "CODEV Framework — AI-agent-friendly project knowledge scaffolding. Give your AI persistent, structured context about your codebase.",
   "main": "index.js",
   "bin": {
     "codev": "index.js",
     "codev-framework": "index.js"
   },
+  "files": [
+    "index.js",
+    "templates",
+    "README.md",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Vajrap/codev.git"

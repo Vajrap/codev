@@ -10,7 +10,7 @@
 
 - All template assets must live in `templates/` and replicate the exact target folders.
 - Use lowercase filenames for standard knowledge files (e.g., `tech_stack.md`).
-- Use uppercase filenames for root agent files (e.g., `AGENT.md`).
+- Use uppercase filenames for root agent files (e.g., `AGENTS.md`).
 
 ## CLI Code conventions
 

@@ -7,7 +7,7 @@
 
 ## Context Loading
 
-- [ ] Read `AGENT.md` for project overview
+- [ ] Read `AGENTS.md` for project overview
 - [ ] Read `codev/index.md` to locate relevant knowledge files
 - [ ] Read knowledge files related to the current task
 - [ ] Read `codev/guardrails.md` for safety boundaries

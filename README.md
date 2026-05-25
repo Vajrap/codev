@@ -18,7 +18,8 @@ CODEV scaffolds a lightweight knowledge layer into your repository — a set of 
 
 ```
 your-project/
-├── AGENT.md              ← Agent reads this first (project cover page)
+├── AGENTS.md              ← Agent reads this first (project cover page)
+├── CLAUDE.md              ← Claude Code bridge that imports AGENTS.md
 └── codev/
     ├── init.md            ← First-time onboarding workflow
     ├── index.md           ← Master table of contents
@@ -39,16 +40,16 @@ your-project/
 ### 1. Scaffold
 
 ```bash
-npx codev init
+npx codev-framework init
 ```
 
-This adds `AGENT.md` and the `codev/` folder to your project. No dependencies. No config files. Just markdown.
+This adds `AGENTS.md`, a Claude-compatible `CLAUDE.md` bridge, and the `codev/` folder to your project. No dependencies. Just markdown.
 
 ### 2. Onboard
 
 Tell your AI agent:
 
-> *"Read AGENT.md and initialize the project knowledge base."*
+> *"Read AGENTS.md and initialize the project knowledge base."*
 
 The agent follows `codev/init.md` — a step-by-step workflow that instructs it to:
 
@@ -57,11 +58,11 @@ The agent follows `codev/init.md` — a step-by-step workflow that instructs it 
 - Write atomic knowledge docs (architecture, tech stack, database, auth, etc.)
 - Build a master index
 - Set up guardrails, conventions, and a glossary
-- Rewrite `AGENT.md` into a project dashboard
+- Rewrite `AGENTS.md` into a project dashboard
 
 ### 3. Work
 
-From now on, every new agent session starts by reading `AGENT.md`. In seconds, it knows:
+From now on, every Codex-compatible agent session starts by reading `AGENTS.md`. Claude Code reads `CLAUDE.md`, which imports the same `AGENTS.md` instructions. In seconds, the agent knows:
 
 - What the project is
 - How to set up the dev environment
@@ -69,8 +70,11 @@ From now on, every new agent session starts by reading `AGENT.md`. In seconds, i
 - What files not to touch
 - What coding patterns to follow
 - What the current task is
+- What it must write back into CODEV after learning or deciding something
 
 No more re-explaining. No more hallucinated architecture. No more broken migrations.
+
+`AGENTS.md` stays short on purpose: it is the entry gate with navigation and mandatory behavior. Deeper knowledge lives under `codev/`.
 
 ---
 
@@ -115,13 +119,13 @@ Track *why* decisions were made. When an agent suggests switching your ORM, the 
 
 ```bash
 # Run directly with npx (no install needed)
-npx codev init
+npx codev-framework init
 
 # Or install globally
-npm install -g codev
+npm install -g codev-framework
 
 # Or clone and link locally
-git clone https://github.com/user/codev.git
+git clone https://github.com/Vajrap/codev.git
 cd codev
 npm link
 ```
@@ -146,7 +150,7 @@ codev version
 
 Tell your AI agent to begin the onboarding:
 
-> *"Read AGENT.md and initialize the project knowledge base."*
+> *"Read AGENTS.md and initialize the project knowledge base."*
 
 The agent will:
 1. Ask you for the project name and description
@@ -154,7 +158,7 @@ The agent will:
 3. Generate atomic knowledge files under `codev/knowledges/`
 4. Create the environment profile, conventions, guardrails, and glossary
 5. Build the master index at `codev/index.md`
-6. Update `AGENT.md` into a project dashboard
+6. Update `AGENTS.md` into a project dashboard
 
 ---
 

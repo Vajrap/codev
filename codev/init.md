@@ -129,18 +129,22 @@ Generate `codev/index.md` as the central table of contents:
 
 ---
 
-## Step 9: Update AGENT.md
+## Step 9: Update AGENTS.md
 
-Rewrite the root `AGENT.md` to serve as the **project cover page**.
+Rewrite the root `AGENTS.md` to serve as the **project cover page**.
 
 Use the template: `codev/templates/agent_post_init_template.md`
 
-The updated AGENT.md should contain:
+The updated AGENTS.md should contain:
 - Project name and one-line description
 - Navigation links to all key codev files
+- A concise Mandatory Agent Rules section covering knowledge updates, ticket context, session postmortems, decisions, and assumption checks
 - A note that the knowledge base has been initialized
 
-**Keep AGENT.md short** — detailed info lives in `profile.md`, `index.md`, etc.
+**Keep AGENTS.md short** — detailed info lives in `profile.md`, `index.md`, etc.
+
+Leave the root `CLAUDE.md` as a short bridge that imports `AGENTS.md`, unless the
+project needs Claude-specific notes below the import.
 
 ---
 
@@ -153,7 +157,7 @@ Present a summary to the user:
    - `codev/guardrails.md` — Are the safety boundaries correct?
    - `codev/glossary.md` — Are the domain terms accurate?
    - `codev/conventions.md` — Do these match team standards?
-3. Confirm that AGENT.md has been updated.
+3. Confirm that AGENTS.md has been updated and CLAUDE.md still imports it.
 4. Explain how to use `codev/current_ticket/` for future tasks.
 
 ---
@@ -165,7 +169,7 @@ documentation of the onboarding process. It can be re-run if the knowledge base
 needs to be rebuilt from scratch (e.g., after a major refactor).
 
 For day-to-day agent work, the agent should:
-1. Start by reading `AGENT.md`
+1. Start by reading `AGENTS.md`
 2. Follow links to `codev/index.md` for specific domain knowledge
 3. Check `codev/current_ticket/` for active work context
 4. Follow `codev/preflight.md` before making code changes

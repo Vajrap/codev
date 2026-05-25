@@ -16,6 +16,16 @@ and setting up this file as the project dashboard.
 
 ---
 
+## Mandatory Agent Rules
+
+- Start with [codev/init.md](codev/init.md), then use `codev/index.md` after initialization.
+- Keep CODEV current: write durable findings, decisions, conventions, and guardrails into the appropriate `codev/` files.
+- For ticket work, maintain `codev/current_ticket/` with scope, findings, changes, blockers, and next steps.
+- End substantial work with a concise note under `codev/sessions/`.
+- Challenge assumptions before rewrites: seek contradicting evidence, weigh cost and risk, and push back when needed.
+
+---
+
 ## What is CODEV?
 
 CODEV (Collaborative Developer) is a framework that gives AI agents persistent,
