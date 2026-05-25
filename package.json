@@ -4,12 +4,12 @@
   "description": "CODEV Framework — AI-agent-friendly project knowledge scaffolding. Give your AI persistent, structured context about your codebase.",
   "main": "index.js",
   "bin": {
-    "codev": "./index.js",
-    "codev-framework": "./index.js"
+    "codev": "index.js",
+    "codev-framework": "index.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Vajrap/codev.git"
+    "url": "git+https://github.com/Vajrap/codev.git"
   },
   "homepage": "https://github.com/Vajrap/codev#readme",
   "keywords": [
