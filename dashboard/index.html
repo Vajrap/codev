@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CODEV Dashboard</title>
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar" aria-label="Project navigation">
+        <header class="brand">
+          <div>
+            <p class="eyebrow">CODEV</p>
+            <h1>Dashboard</h1>
+          </div>
+          <button id="refreshButton" class="icon-button" type="button" title="Refresh current folder">Refresh</button>
+        </header>
+
+        <nav class="crumbs" id="crumbs" aria-label="Current folder"></nav>
+
+        <section class="nav-section" aria-labelledby="childPagesHeading">
+          <div class="section-heading">
+            <h2 id="childPagesHeading">Child Pages</h2>
+            <span id="folderCount" class="count">0</span>
+          </div>
+          <div id="folderList" class="nav-list"></div>
+        </section>
+
+        <section class="nav-section" aria-labelledby="markdownHeading">
+          <div class="section-heading">
+            <h2 id="markdownHeading">Markdown</h2>
+            <span id="markdownCount" class="count">0</span>
+          </div>
+          <div id="markdownList" class="nav-list"></div>
+        </section>
+      </aside>
+
+      <main class="content">
+        <header class="file-header">
+          <div>
+            <p class="eyebrow" id="fileType">Folder</p>
+            <h2 id="fileTitle">Select a Markdown file</h2>
+            <p id="filePath" class="path-label"></p>
+          </div>
+          <div class="actions">
+            <button id="viewButton" class="button secondary" type="button">View</button>
+            <button id="editButton" class="button secondary" type="button">Edit</button>
+            <button id="saveButton" class="button primary" type="button">Save</button>
+          </div>
+        </header>
+
+        <div id="status" class="status" role="status"></div>
+        <article id="preview" class="markdown-preview"></article>
+        <textarea id="editor" class="editor" spellcheck="false"></textarea>
+      </main>
+    </div>
+
+    <script type="module" src="/assets/app.js"></script>
+  </body>
+</html>

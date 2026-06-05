@@ -76,6 +76,16 @@ No more re-explaining. No more hallucinated architecture. No more broken migrati
 
 `AGENTS.md` stays short on purpose: it is the entry gate with navigation and mandatory behavior. Deeper knowledge lives under `codev/`.
 
+### 4. Browse
+
+Run the local dashboard when you want a human-readable cockpit over the same Markdown knowledge base:
+
+```bash
+codev serve
+```
+
+The dashboard serves on localhost, scans the current project folder, separates child folders from Markdown files, renders Markdown, and lets you edit/save `.md` files through the local server.
+
 ---
 
 ## Core Concepts
@@ -144,6 +154,12 @@ codev help
 
 # Show version
 codev version
+
+# Serve the human dashboard for the current project
+codev serve
+
+# Serve another project or custom port
+codev serve ./my-project --port 4174
 ```
 
 ## After Initialization
