@@ -75,7 +75,8 @@ function renderCrumbs(currentPath) {
   let nextPath = "";
   for (const part of parts) {
     nextPath = nextPath ? `${nextPath}/${part}` : part;
-    refs.crumbs.append(button(part, "crumb", () => openFolder(nextPath)));
+    const crumbPath = nextPath;
+    refs.crumbs.append(button(part, "crumb", () => openFolder(crumbPath)));
   }
 }
 
@@ -198,7 +199,64 @@ function inlineMarkdown(value) {
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>');
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_match, label, href) => {
+      const safeHref = escapeHtml(href.trim());
+      return `<a href="${safeHref}" rel="noreferrer">${label}</a>`;
+    });
+}
+
+function resolveRelativePath(fromFile, href) {
+  const baseParts = fromFile && fromFile !== "." ? fromFile.split(/[\\/]/).slice(0, -1) : [];
+  const parts = `${baseParts.join("/")}/${href}`.split(/[\\/]+/);
+  const resolved = [];
+
+  for (const part of parts) {
+    if (!part || part === ".") {
+      continue;
+    }
+
+    if (part === "..") {
+      if (resolved.length === 0) {
+        return null;
+      }
+      resolved.pop();
+      continue;
+    }
+
+    resolved.push(part);
+  }
+
+  return resolved.join("/") || ".";
+}
+
+function openPreviewLink(event) {
+  const link = event.target.closest("a");
+  if (!link || !refs.preview.contains(link)) {
+    return;
+  }
+
+  const href = link.getAttribute("href") || "";
+  if (/^(https?:|mailto:|tel:|#)/i.test(href)) {
+    return;
+  }
+
+  const [pathOnly] = href.split("#");
+  if (!pathOnly) {
+    return;
+  }
+
+  const resolvedPath = resolveRelativePath(state.selectedFile, pathOnly);
+  if (!resolvedPath) {
+    setStatus("That Markdown link points outside the CODEV folder.", true);
+    event.preventDefault();
+    return;
+  }
+
+  event.preventDefault();
+  const next = pathOnly.toLowerCase().endsWith(".md")
+    ? openMarkdown(resolvedPath)
+    : openFolder(resolvedPath);
+  next.catch((error) => setStatus(error.message, true));
 }
 
 function renderTable(lines) {
@@ -335,6 +393,8 @@ refs.editButton.addEventListener("click", () => {
 refs.saveButton.addEventListener("click", () => {
   saveMarkdown().catch((error) => setStatus(error.message, true));
 });
+
+refs.preview.addEventListener("click", openPreviewLink);
 
 updateMode();
 loadFromHash();

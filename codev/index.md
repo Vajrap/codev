@@ -46,5 +46,6 @@
 | Resource | Link | Description |
 |----------|------|-------------|
 | 🎫 Current Ticket | [current_ticket/](current_ticket/) | Active task context |
+| 🗃 Ticket Archive | [tickets/](tickets/) | Completed ticket history and retained findings |
 | 📜 Decision Log | [decisions/](decisions/) | Architectural decision records |
 | 🧠 Session Log | [sessions/](sessions/) | Agent session memory |

@@ -44,6 +44,7 @@ _Read these before starting:_
 - [ ] Testing
 - [ ] Knowledge base update
 - [ ] Session log written
+- [ ] Archived to `codev/tickets/{YYYY-MM-DD-ticket-slug}/` when complete
 
 ---
 
@@ -66,3 +67,15 @@ _Running log of files modified and why._
 ## Blockers
 
 _Issues that need human input or are blocking progress._
+
+---
+
+## Archive Notes
+
+When this ticket is complete:
+
+1. Move or copy this ticket context into `codev/tickets/{YYYY-MM-DD-ticket-slug}/`.
+2. Preserve scope, findings, changes, blockers, final status, and handoff notes.
+3. Promote durable project facts into `codev/knowledges/`, `codev/conventions.md`, `codev/guardrails.md`, or `codev/glossary.md`.
+4. Record architecture/product tradeoffs in `codev/decisions/`.
+5. Reset `codev/current_ticket/` for the next active ticket.

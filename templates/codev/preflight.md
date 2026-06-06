@@ -16,6 +16,7 @@
 ## Active Work Check
 
 - [ ] Check `codev/current_ticket/` for existing work context
+- [ ] Check `codev/tickets/` for related completed ticket history
 - [ ] Check `codev/sessions/` for recent session logs (handoff notes)
 - [ ] Check `codev/decisions/` for relevant past decisions
 
@@ -36,4 +37,5 @@
 - [ ] Run the test suite
 - [ ] Update relevant knowledge files if your changes affect them
 - [ ] Log your session in `codev/sessions/`
-- [ ] Update `codev/current_ticket/changes.md` with what you modified
+- [ ] Update `codev/current_ticket/` with findings, changes, blockers, and next steps
+- [ ] When the ticket is complete, archive it under `codev/tickets/{YYYY-MM-DD-ticket-slug}/`

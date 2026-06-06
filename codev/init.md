@@ -125,7 +125,7 @@ Generate `codev/index.md` as the central table of contents:
 
 - Link to every knowledge file with a one-line description
 - Organize by category (Core, Infrastructure, Features, etc.)
-- Include links to active work areas (current_ticket, decisions, sessions)
+- Include links to work areas (`current_ticket/`, `tickets/`, `decisions/`, `sessions/`)
 
 ---
 
@@ -138,7 +138,7 @@ Use the template: `codev/templates/agent_post_init_template.md`
 The updated AGENTS.md should contain:
 - Project name and one-line description
 - Navigation links to all key codev files
-- A concise Mandatory Agent Rules section covering knowledge updates, ticket context, session postmortems, decisions, and assumption checks
+- A concise Mandatory Agent Rules section covering knowledge updates, active ticket context, completed ticket archival, session postmortems, decisions, and assumption checks
 - A note that the knowledge base has been initialized
 
 **Keep AGENTS.md short** — detailed info lives in `profile.md`, `index.md`, etc.
@@ -158,7 +158,7 @@ Present a summary to the user:
    - `codev/glossary.md` — Are the domain terms accurate?
    - `codev/conventions.md` — Do these match team standards?
 3. Confirm that AGENTS.md has been updated and CLAUDE.md still imports it.
-4. Explain how to use `codev/current_ticket/` for future tasks.
+4. Explain how to use `codev/current_ticket/` for active work and `codev/tickets/` for completed ticket archives.
 
 ---
 
@@ -172,4 +172,5 @@ For day-to-day agent work, the agent should:
 1. Start by reading `AGENTS.md`
 2. Follow links to `codev/index.md` for specific domain knowledge
 3. Check `codev/current_ticket/` for active work context
-4. Follow `codev/preflight.md` before making code changes
+4. Check `codev/tickets/` for related completed work before starting a new ticket
+5. Follow `codev/preflight.md` before making code changes

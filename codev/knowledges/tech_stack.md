@@ -1,8 +1,8 @@
 # Tech Stack
 
 > **Domain**: tech_stack
-> **Last Verified**: 2026-05-25
-> **Verified By**: Antigravity
+> **Last Verified**: 2026-06-05
+> **Verified By**: Codex
 
 ---
 
@@ -18,7 +18,9 @@
 
 The CLI has **zero production dependencies**. It uses standard Node.js built-in core modules:
 - `fs` — File system operations (reading, writing, copying files, creating directories).
+- `http` — Local dashboard server for `codev serve`.
 - `path` — Utilities for resolving file and directory paths across different platforms.
+- `url` — Request URL parsing for dashboard routes and query parameters.
 
 ---
 
@@ -26,3 +28,4 @@ The CLI has **zero production dependencies**. It uses standard Node.js built-in 
 
 - `npm link` — Used during development to register the CLI globally.
 - `npm publish` — Used to release new versions of `codev-framework` to the npm registry.
+- `npm pack` — Used to verify published package contents before release.

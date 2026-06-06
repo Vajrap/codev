@@ -1,7 +1,7 @@
-# Current Ticket: Strengthen Initial AGENTS Persistence Rules
+# Archived Ticket: Strengthen Initial AGENTS Persistence Rules
 
 > **Date**: 2026-06-05
-> **Status**: Completed
+> **Final Status**: Completed
 
 ## Scope
 

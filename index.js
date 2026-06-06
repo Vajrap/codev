@@ -69,9 +69,23 @@ function parseServeArgs(args) {
   }
 
   return {
-    targetDir: path.resolve(targetDir),
+    targetDir: resolveCodevServeRoot(path.resolve(targetDir)),
     port,
   };
+}
+
+function resolveCodevServeRoot(targetDir) {
+  const codevDir = path.join(targetDir, "codev");
+
+  if (!fs.existsSync(codevDir)) {
+    return targetDir;
+  }
+
+  if (fs.statSync(codevDir).isDirectory()) {
+    return codevDir;
+  }
+
+  return targetDir;
 }
 
 function resolveInsideRoot(rootDir, requestedPath = "") {
@@ -296,6 +310,7 @@ function cmdInit(targetDir) {
   console.log("   ✅ codev/templates/       — Reusable document templates");
   console.log("   ✅ codev/knowledges/      — Atomic knowledge files");
   console.log("   ✅ codev/current_ticket/  — Active task context");
+  console.log("   ✅ codev/tickets/         — Completed ticket archive");
   console.log("   ✅ codev/decisions/       — Architectural decision records");
   console.log("   ✅ codev/sessions/        — Agent session memory");
 
@@ -339,7 +354,7 @@ function cmdHelp() {
     codev init              Initialize in the current directory
     codev init ./my-app     Initialize in ./my-app
     codev init /path/to/repo
-    codev serve             Open dashboard data for the current directory
+    codev serve             Open dashboard data for the current CODEV folder
     codev serve --port 4174 Use a custom dashboard port
 
   WORKFLOW

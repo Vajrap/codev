@@ -31,6 +31,7 @@ your-project/
     ├── knowledges/        ← Atomic knowledge files (≤150 lines each)
     ├── decisions/         ← Architectural decision records
     ├── current_ticket/    ← Active task context
+    ├── tickets/           ← Completed ticket archive
     ├── sessions/          ← Agent session memory
     └── templates/         ← Reusable document templates
 ```
@@ -84,7 +85,7 @@ Run the local dashboard when you want a human-readable cockpit over the same Mar
 codev serve
 ```
 
-The dashboard serves on localhost, scans the current project folder, separates child folders from Markdown files, renders Markdown, and lets you edit/save `.md` files through the local server.
+The dashboard serves on localhost, opens the project's `codev/` folder when present, separates child folders from Markdown files, renders Markdown, and lets you edit/save `.md` files through the local server.
 
 ---
 
@@ -118,6 +119,10 @@ Explicit boundaries: files the agent must not edit (migrations, lock files), pat
 ### Session Memory (`codev/sessions/`)
 
 After each session, the agent logs what it did, what it learned, and what's left. The next agent reads the handoff notes and continues seamlessly.
+
+### Ticket Context (`codev/current_ticket/` and `codev/tickets/`)
+
+`current_ticket/` is the active workspace for the task in front of the agent. When the ticket is complete, the agent archives that context under `tickets/{date-ticket-slug}/` so findings, implementation notes, blockers, and handoff details remain available without cluttering the next ticket.
 
 ### Decision Records (`codev/decisions/`)
 
@@ -200,6 +205,7 @@ No vendor lock-in. No proprietary formats. No API keys required.
 - **Indexed over scattered** — A central map so agents don't wander
 - **Guarded over permissive** — Explicit boundaries prevent agent mistakes
 - **Persistent over ephemeral** — Knowledge survives across sessions
+- **Archived over overwritten** — Completed ticket context is preserved for later review
 
 ---
 

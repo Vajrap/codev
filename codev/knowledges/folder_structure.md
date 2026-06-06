@@ -21,6 +21,7 @@
         ├── index.md    - Knowledge index skeleton
         ├── init.md     - Agent onboarding instructions
         ├── preflight.md- Agent pre-work checklist
+        ├── tickets/    - Completed ticket archive placeholder
         └── templates/  - Reusable agent document templates
 ```
 
@@ -30,4 +31,4 @@
 
 - **`templates/`**: Contains the blueprint files. Any additions or edits to how CODEV initializes other projects should be modified here.
 - **`dashboard/`**: Contains the HTML/CSS/JS served by `codev serve`. These files are package assets, not scaffolded project knowledge files.
-- **`codev/`**: The self-hosted CODEV workspace for *this* project (CODEV itself). It is used to keep track of this codebase's own documentation and active tickets.
+- **`codev/`**: The self-hosted CODEV workspace for *this* project (CODEV itself). It is used to keep track of this codebase's own documentation, active ticket, completed ticket archive, decisions, and session notes.

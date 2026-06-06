@@ -1,6 +1,6 @@
 {
   "name": "codev-framework",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "CODEV Framework — AI-agent-friendly project knowledge scaffolding. Give your AI persistent, structured context about your codebase.",
   "main": "index.js",
   "bin": {
