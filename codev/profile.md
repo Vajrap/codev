@@ -21,6 +21,14 @@
    This will install any dependencies (none currently) and create a global symlink for `codev` and `codev-framework`.
 
 ## Verification Commands
+- Run the full CLI suite:
+  ```bash
+  npm test
+  ```
+- Validate this repository's manifest:
+  ```bash
+  node index.js validate --project .
+  ```
 - Check CLI help:
   ```bash
   codev help

@@ -7,11 +7,11 @@
 
 ## Context Loading
 
-- [ ] Read `AGENTS.md` for project overview
-- [ ] Read `codev/index.md` to locate relevant knowledge files
-- [ ] Read knowledge files related to the current task
-- [ ] Read `codev/guardrails.md` for safety boundaries
-- [ ] Read `codev/conventions.md` for coding standards
+- [ ] Read existing project instructions
+- [ ] Normalize the task action, scope, and known paths
+- [ ] Run `codev route --action <action> --scope <scope> [--path <path>]`
+- [ ] Read only the routed skills, knowledge, state, and guardrails
+- [ ] Use `codev/index.md` only when no specific route matches
 
 ## Active Work Check
 
@@ -27,7 +27,7 @@
 
 ## Before Writing Code
 
-- [ ] Create a new git branch for this work (if not already on one)
+- [ ] Confirm the current branch or worktree matches the requested execution environment
 - [ ] Confirm the acceptance criteria for the current task
 - [ ] Identify affected files and check the dependency map (if available)
 - [ ] Review risk zones for any high-risk files you'll be modifying

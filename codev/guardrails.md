@@ -11,3 +11,6 @@
 - Never add external npm dependencies to `package.json` without explicit user permission.
 - Always perform a pre-flight existence check before creating files or folders.
 - Ensure the shebang `#!/usr/bin/env node` remains at the very top of `index.js`.
+- Never overwrite host-project `AGENTS.md`, `AGENT.md`, or `CLAUDE.md` during installation or upgrade.
+- Modify root agent instructions only inside the explicit Codev managed markers.
+- Do not describe natural-language task classification as deterministic.

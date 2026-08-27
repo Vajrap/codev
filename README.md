@@ -1,217 +1,242 @@
 # CODEV
 
-**AI-agent-friendly project knowledge scaffolding.**
+**Project-local knowledge, skills, and deterministic task routing for AI-assisted development.**
 
-> Give your AI agent persistent, structured context about your codebase — so it stops guessing and starts *knowing*.
+Codev keeps durable project context in the repository and loads only the
+knowledge and workflows relevant to the current task. Existing project agent
+instructions remain authoritative and are never replaced during installation.
 
----
+## Why Codev
 
-## The Problem
+Coding agents can explore large repositories, but indiscriminate context is not
+useful context. Projects still need durable facts, explicit safety constraints,
+accepted decisions, active-task state, recurring implementation workflows, and
+evidence-based verification.
 
-Every time you start a new AI agent session, it knows nothing about your project. You explain the same things over and over. It reads the wrong files, uses the wrong patterns, breaks things it shouldn't touch, and forgets everything by the next session.
+Codev separates those concerns:
 
-**CODEV fixes this.**
+| Plane | Responsibility | Source |
+|-------|----------------|--------|
+| Knowledge | Facts, conventions, decisions, tickets, and handoffs | Markdown under `codev/` |
+| Capability | How recurring project work should be performed | Project-local agent skills |
+| Routing | Which capability and context apply to normalized task inputs | `codev/manifest.yaml` |
+| Resolution | Validate and produce an ordered load plan | Codev CLI |
+| Navigation | Human-readable browsing and fallback | `codev/index.md` and dashboard |
 
-## What It Does
+Natural-language interpretation remains agent-driven. Once a task is normalized
+into an explicit action, scope, and optional paths, Codev routing is deterministic.
 
-CODEV scaffolds a lightweight knowledge layer into your repository — a set of markdown files that any AI agent can read to instantly understand your project, follow your conventions, and pick up where the last session left off.
+## Install Safely
 
+```bash
+npx codev-framework init
 ```
+
+`codev init` creates only the Codev-owned `codev/` directory. Existing
+`AGENTS.md`, `AGENT.md`, and `CLAUDE.md` files are preserved byte-for-byte.
+
+Then tell your agent:
+
+> Read `codev/START.md` and initialize Codev for this project. Preserve the
+> existing agent instructions.
+
+The bootstrap workflow inspects the repository, populates focused knowledge,
+defines project routes, and creates project-local skills only where recurring
+work benefits from them.
+
+## Project Layout
+
+```text
 your-project/
-├── AGENTS.md              ← Agent reads this first (project cover page)
-├── CLAUDE.md              ← Claude Code bridge that imports AGENTS.md
+├── AGENTS.md                 existing host-project instructions, if any
+├── .agents/skills/           optional project-local capability skills
 └── codev/
-    ├── init.md            ← First-time onboarding workflow
-    ├── index.md           ← Master table of contents
-    ├── profile.md         ← Dev environment & setup
-    ├── guardrails.md      ← What the agent must NOT do
-    ├── conventions.md     ← Coding standards & patterns
-    ├── glossary.md        ← Domain-specific terminology
-    ├── preflight.md       ← Checklist before making changes
-    ├── knowledges/        ← Atomic knowledge files (≤150 lines each)
-    ├── decisions/         ← Architectural decision records
-    ├── current_ticket/    ← Active task context
-    ├── tickets/           ← Completed ticket archive
-    ├── sessions/          ← Agent session memory
-    └── templates/         ← Reusable document templates
+    ├── START.md              bootstrap and migration entry
+    ├── manifest.yaml         deterministic routing declaration
+    ├── index.md              human-readable knowledge map and fallback
+    ├── profile.md            environment and setup
+    ├── guardrails.md         safety constraints
+    ├── conventions.md        accepted project conventions
+    ├── glossary.md           project language
+    ├── preflight.md          pre-work verification gate
+    ├── knowledges/           focused durable project knowledge
+    ├── current_ticket/       active work context
+    ├── tickets/              completed work archive
+    ├── decisions/            architecture and product decisions
+    ├── sessions/             substantial-work handoffs
+    └── templates/            reusable Codev documents
 ```
 
-## How It Works
+## Deterministic Routing
 
-### 1. Scaffold
+A route declares when it applies and what must be loaded or enforced:
+
+```yaml
+version: 1
+
+project:
+  name: example
+
+bootstrap:
+  status: complete
+  entry: codev/START.md
+
+routing:
+  fallback:
+    knowledge:
+      - codev/index.md
+
+routes:
+  implement-backend:
+    priority: 100
+    when:
+      actions:
+        - implement
+        - fix
+      scopes:
+        - backend
+      paths:
+        - server/**
+    load:
+      skills:
+        - implement-backend
+      knowledge:
+        - codev/knowledges/backend.md
+      state:
+        - codev/current_ticket/
+    enforce:
+      guardrails:
+        - codev/guardrails.md
+      verification: focused-then-full
+```
+
+Resolve it with normalized inputs:
 
 ```bash
-npx codev-framework init
+codev route \
+  --action implement \
+  --scope backend \
+  --path server/auth/login.js
 ```
 
-This adds `AGENTS.md`, a Claude-compatible `CLAUDE.md` bridge, and the `codev/` folder to your project. No dependencies. Just markdown.
+For machine-readable output:
 
-### 2. Onboard
+```bash
+codev route --action review --scope project --json
+```
 
-Tell your AI agent:
+Human output is explanatory by default; `--explain` is accepted when callers
+want to state that intent explicitly.
 
-> *"Read AGENTS.md and initialize the project knowledge base."*
+Matching routes compose in descending priority order, then by route ID. Values
+are de-duplicated while preserving that order. When no route matches, the
+manifest's fallback knowledge is returned.
 
-The agent follows `codev/init.md` — a step-by-step workflow that instructs it to:
+## Manifest Validation
 
-- Ask you about the project
-- Scan the entire repository
-- Write atomic knowledge docs (architecture, tech stack, database, auth, etc.)
-- Build a master index
-- Set up guardrails, conventions, and a glossary
-- Rewrite `AGENTS.md` into a project dashboard
+```bash
+codev validate
+```
 
-### 3. Work
+Validation checks:
 
-From now on, every Codex-compatible agent session starts by reading `AGENTS.md`. Claude Code reads `CLAUDE.md`, which imports the same `AGENTS.md` instructions. In seconds, the agent knows:
+- schema version and required mappings;
+- route selector and load shapes;
+- project-contained knowledge, state, and guardrail references;
+- `.agents/skills/<name>/SKILL.md` references;
+- unsupported YAML constructs and indentation errors.
 
-- What the project is
-- How to set up the dev environment
-- Where to find domain-specific knowledge
-- What files not to touch
-- What coding patterns to follow
-- What the current task is
-- What it must write back into CODEV after learning or deciding something
+To remain zero-dependency and portable, Codev accepts an intentional YAML
+subset: two-space mappings, scalar lists, strings, integers, booleans, null, and
+empty maps/lists. It rejects tabs, anchors, aliases, multiline scalars, flow
+collections with values, and lists of mappings.
 
-No more re-explaining. No more hallucinated architecture. No more broken migrations.
+## Optional `AGENTS.md` Integration
 
-`AGENTS.md` stays short on purpose: it is the entry gate with navigation and mandatory behavior. Deeper knowledge lives under `codev/`.
+Installation and root integration are separate operations:
 
-### 4. Browse
+```bash
+codev integrate agents
+```
 
-Run the local dashboard when you want a human-readable cockpit over the same Markdown knowledge base:
+This adds or updates only a marked block:
+
+```md
+<!-- codev:start -->
+## Codev
+
+For Codev task selection, normalize action and scope, then run `codev route`.
+This supersedes index-first Codev routing; `codev/index.md` is the fallback.
+Read `codev/START.md` only for initialization or migration.
+<!-- codev:end -->
+```
+
+Existing content outside the markers is preserved. Integration is idempotent,
+checkable, and reversible:
+
+```bash
+codev integrate agents --check
+codev integrate agents --remove
+```
+
+## Upgrade Existing Codev Projects
+
+Older Codev installations already have a `codev/` directory but no manifest.
+Upgrade them additively:
+
+```bash
+npx codev-framework upgrade
+```
+
+The command adds missing `START.md` and `manifest.yaml` files and records the
+installed framework version. It does not overwrite existing knowledge or root
+agent instructions. Review and complete the new manifest, then run
+`codev validate`.
+
+## Dashboard
 
 ```bash
 codev serve
-```
-
-The dashboard serves on localhost, opens the project's `codev/` folder when present, separates child folders from Markdown files, renders Markdown, and lets you edit/save `.md` files through the local server.
-
----
-
-## Core Concepts
-
-### Atomic Knowledge (≤150 lines per file)
-
-Knowledge files are short, focused, and single-domain. Instead of one massive doc, you get:
-
-```
-codev/knowledges/
-├── architecture.md       ← System design overview
-├── tech_stack.md          ← Languages, frameworks, versions
-├── database_schema.md    ← Models and relationships
-├── api_routes.md          ← Endpoints and contracts
-├── auth_flow.md           ← Authentication mechanism
-├── deployment.md          ← Build and deploy pipeline
-└── ...
-```
-
-**Why?** Small files fit in context windows. The agent reads only what's relevant to the current task — guided by the index.
-
-### The Index (`codev/index.md`)
-
-A table of contents that maps domains to files. The agent doesn't read the whole codebase — it reads the index and navigates to exactly what it needs.
-
-### Guardrails (`codev/guardrails.md`)
-
-Explicit boundaries: files the agent must not edit (migrations, lock files), patterns to avoid (`any` types, `console.log`), security rules (never hardcode secrets). Think of it as a fence around dangerous areas.
-
-### Session Memory (`codev/sessions/`)
-
-After each session, the agent logs what it did, what it learned, and what's left. The next agent reads the handoff notes and continues seamlessly.
-
-### Ticket Context (`codev/current_ticket/` and `codev/tickets/`)
-
-`current_ticket/` is the active workspace for the task in front of the agent. When the ticket is complete, the agent archives that context under `tickets/{date-ticket-slug}/` so findings, implementation notes, blockers, and handoff details remain available without cluttering the next ticket.
-
-### Decision Records (`codev/decisions/`)
-
-Track *why* decisions were made. When an agent suggests switching your ORM, the ADR explains why you chose this one — preventing circular debates.
-
----
-
-## Installation
-
-```bash
-# Run directly with npx (no install needed)
-npx codev-framework init
-
-# Or install globally
-npm install -g codev-framework
-
-# Or clone and link locally
-git clone https://github.com/Vajrap/codev.git
-cd codev
-npm link
-```
-
-## Usage
-
-```bash
-# Initialize in current directory
-codev init
-
-# Initialize in a specific directory
-codev init ./my-project
-
-# Show help
-codev help
-
-# Show version
-codev version
-
-# Serve the human dashboard for the current project
-codev serve
-
-# Serve another project or custom port
 codev serve ./my-project --port 4174
 ```
 
-## After Initialization
+The local server binds to `127.0.0.1`, browses the project's Codev knowledge,
+renders Markdown, and supports editing existing Markdown files.
 
-Tell your AI agent to begin the onboarding:
+## CLI
 
-> *"Read AGENTS.md and initialize the project knowledge base."*
+```text
+codev init [dir]
+codev upgrade [dir]
+codev integrate agents [--project dir] [--check|--remove]
+codev validate [--project dir]
+codev route [--project dir] --action value --scope value [--path value] [--explain|--json]
+codev serve [dir] [--port number]
+codev version
+codev help
+```
 
-The agent will:
-1. Ask you for the project name and description
-2. Scan the repository structure, dependencies, and source code
-3. Generate atomic knowledge files under `codev/knowledges/`
-4. Create the environment profile, conventions, guardrails, and glossary
-5. Build the master index at `codev/index.md`
-6. Update `AGENTS.md` into a project dashboard
+## Principles
 
----
+- **Host-owned instructions** — adoption must not replace project governance.
+- **Agent judgment before routing** — infer the task, then normalize it explicitly.
+- **Deterministic execution after routing** — equal manifest and inputs produce an equal plan.
+- **Progressive disclosure** — load focused context, not the entire knowledge base.
+- **Skills for behavior** — recurring implementation procedures belong in skills.
+- **Markdown for durable knowledge** — facts and decisions remain human-readable.
+- **YAML for the control plane** — routing is declarative and machine-validatable.
+- **Evidence over catalogues** — durable principles point agents toward live precedent.
+- **Explicit adapters** — platform integration is narrow, marked, and reversible.
 
-## Works With Any AI Agent
+## Development
 
-CODEV is just markdown files. It works with:
+Codev uses Node.js core modules only.
 
-- **Claude** (Anthropic)
-- **Gemini** (Google)
-- **GPT / ChatGPT** (OpenAI)
-- **Cursor / Windsurf / Cline**
-- **GitHub Copilot**
-- Any AI tool that can read files
-
-No vendor lock-in. No proprietary formats. No API keys required.
-
----
-
-## Philosophy
-
-- **Markdown over metadata** — Human-readable, agent-readable, version-controllable
-- **Atomic over monolithic** — Small focused files over one giant doc
-- **Indexed over scattered** — A central map so agents don't wander
-- **Guarded over permissive** — Explicit boundaries prevent agent mistakes
-- **Persistent over ephemeral** — Knowledge survives across sessions
-- **Archived over overwritten** — Completed ticket context is preserved for later review
-
----
-
-## Contributing
-
-Contributions are welcome! Whether it's new templates, CLI improvements, or documentation.
+```bash
+npm test
+node index.js validate --project .
+node index.js route --project . --action implement --scope cli --path index.js
+```
 
 ## License
 

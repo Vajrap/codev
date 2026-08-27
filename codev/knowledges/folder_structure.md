@@ -1,34 +1,36 @@
 # Folder Structure
 
 > **Domain**: folder_structure
-> **Last Verified**: 2026-06-05
+> **Last Verified**: 2026-08-27
 > **Verified By**: Codex
 
----
+## Repository Layout
 
-## Directory Layout
-
+```text
+├── AGENTS.md             host instructions for this repository
+├── README.md             product and CLI documentation
+├── index.js              zero-dependency CLI implementation
+├── package.json          package metadata and test script
+├── tests/
+│   └── cli.test.js       isolated CLI behavior tests
+├── dashboard/            local Markdown dashboard assets
+├── templates/            assets copied into target projects
+│   └── codev/
+│       ├── START.md      canonical bootstrap workflow
+│       ├── manifest.yaml routing declaration skeleton
+│       ├── index.md      human knowledge map and fallback
+│       ├── init.md       legacy compatibility pointer
+│       ├── preflight.md  routed pre-work checklist
+│       ├── current_ticket/
+│       ├── tickets/
+│       └── templates/
+└── codev/                this repository's self-hosted Codev knowledge
 ```
-├── .gitignore          - Standard git ignores (node_modules, .DS_Store)
-├── LICENSE             - MIT license terms
-├── README.md           - GitHub repository landing page and usage guide
-├── dashboard/          - Static assets for the local human dashboard
-├── index.js            - Main executable CLI entry point
-├── package.json        - CLI configuration and exports
-└── templates/          - Scaffolding templates copied to target repos
-    ├── AGENTS.md        - Initial agent rules and signpost to codev/init.md
-    └── codev/          - The core folder structure templates
-        ├── index.md    - Knowledge index skeleton
-        ├── init.md     - Agent onboarding instructions
-        ├── preflight.md- Agent pre-work checklist
-        ├── tickets/    - Completed ticket archive placeholder
-        └── templates/  - Reusable agent document templates
-```
 
----
+## Ownership
 
-## Key Directories
-
-- **`templates/`**: Contains the blueprint files. Any additions or edits to how CODEV initializes other projects should be modified here.
-- **`dashboard/`**: Contains the HTML/CSS/JS served by `codev serve`. These files are package assets, not scaffolded project knowledge files.
-- **`codev/`**: The self-hosted CODEV workspace for *this* project (CODEV itself). It is used to keep track of this codebase's own documentation, active ticket, completed ticket archive, decisions, and session notes.
+- `templates/codev/` is the complete directory copied by `codev init`.
+- Root agent instruction templates are intentionally absent; host projects own them.
+- `codev upgrade` copies only missing contract files into an older installation.
+- `dashboard/` is packaged but not copied into initialized projects.
+- `codev/` tracks this framework's own knowledge, routes, tickets, decisions, and sessions.

@@ -1,0 +1,56 @@
+version: 1
+
+project:
+  name: CODEV Framework
+
+bootstrap:
+  status: complete
+  entry: codev/START.md
+
+routing:
+  fallback:
+    knowledge:
+      - codev/index.md
+
+routes:
+  design-framework:
+    priority: 100
+    when:
+      actions:
+        - design
+        - architecture
+      scopes:
+        - framework
+        - project
+    load:
+      knowledge:
+        - codev/knowledges/architecture.md
+        - codev/conventions.md
+      state:
+        - codev/current_ticket/
+    enforce:
+      guardrails:
+        - codev/guardrails.md
+      verification: review-decision
+
+  implement-framework:
+    priority: 100
+    when:
+      actions:
+        - implement
+        - fix
+        - refactor
+      scopes:
+        - framework
+        - cli
+    load:
+      knowledge:
+        - codev/knowledges/architecture.md
+        - codev/knowledges/tech_stack.md
+        - codev/conventions.md
+      state:
+        - codev/current_ticket/
+    enforce:
+      guardrails:
+        - codev/guardrails.md
+      verification: node-test-and-diff-review

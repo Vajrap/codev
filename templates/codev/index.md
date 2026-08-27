@@ -21,6 +21,8 @@
 | Resource | Link | Description |
 |----------|------|-------------|
 | 📄 Project Cover | [AGENTS.md](../AGENTS.md) | Project overview and navigation |
+| 🚦 Routing Manifest | [manifest.yaml](manifest.yaml) | Deterministic task routing contract |
+| 🚀 Bootstrap | [START.md](START.md) | Initialization and migration workflow |
 | 👤 Environment Profile | [profile.md](profile.md) | Dev setup, requirements, env vars |
 | ⚠️ Guardrails | [guardrails.md](guardrails.md) | Safety boundaries and forbidden zones |
 | 📐 Conventions | [conventions.md](conventions.md) | Coding standards and patterns |
@@ -74,6 +76,5 @@ _Read the files relevant to your current task._
 
 ---
 
-> **Note**: This index is generated during initialization and should be updated
-> whenever new knowledge files are added or existing ones are restructured.
-> The agent should keep this index in sync with the actual files.
+> **Note**: This remains the human-readable map and routing fallback. Update it
+> when knowledge files change; deterministic task selection lives in `manifest.yaml`.

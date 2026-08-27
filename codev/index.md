@@ -21,6 +21,8 @@
 | Resource | Link | Description |
 |----------|------|-------------|
 | 📄 Project Cover | [AGENTS.md](../AGENTS.md) | Project overview and navigation |
+| 🚦 Routing Manifest | [manifest.yaml](manifest.yaml) | Deterministic task routing contract |
+| 🚀 Bootstrap | [START.md](START.md) | Initialization and migration workflow |
 | 👤 Environment Profile | [profile.md](profile.md) | Dev setup, requirements, env vars |
 | ⚠️ Guardrails | [guardrails.md](guardrails.md) | Safety boundaries and forbidden zones |
 | 📐 Conventions | [conventions.md](conventions.md) | Coding standards and patterns |

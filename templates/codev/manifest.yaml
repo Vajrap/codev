@@ -1,0 +1,17 @@
+version: 1
+
+project:
+  name: uninitialized
+
+bootstrap:
+  status: pending
+  entry: codev/START.md
+
+routing:
+  fallback:
+    knowledge:
+      - codev/index.md
+
+# Routes are keyed mappings. The bootstrap agent adds project-specific routes.
+# Each route may declare priority, when, load, and enforce mappings.
+routes: {}

@@ -36,3 +36,11 @@
 
 > **CODEV Knowledge Base**: Initialized on 2026-05-25.
 > For the initialization workflow, see [codev/init.md](codev/init.md).
+
+<!-- codev:start -->
+## Codev
+
+For Codev task selection, normalize action and scope, then run `codev route`.
+This supersedes index-first Codev routing; `codev/index.md` is the fallback.
+Read `codev/START.md` only for initialization or migration.
+<!-- codev:end -->
